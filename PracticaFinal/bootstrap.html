@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap 5 Website Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="CSS/style.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="JS/video.js"></script>
+
+  <!-- ESTILO DE LA PAGINA -->
+  <style>
+    .fakeimg {
+      height: 200px;
+      background: #aaa;
+    }
+  </style>
+  <style>
+    div#video_player_box {
+      width: 550px;
+      background: #000;
+      margin: 0px auto;
+    }
+
+    div#video_controls_bar {
+      background: #333;
+      padding: 10px;
+      color: #CCC;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- CONTENEDOR DE LA CABECERA -->
+  <div class="p-5 bg-primary text-white">
+    <div class="row">
+      <div class="col-sm-2">
+        <img src="img/LOGO.png" alt="logo" height="150" width="150">
+      </div>
+      <div class="col-sm-10 mt-4">
+        <h1>Proyecto de Prácticas</h1>
+        <p>Reproductor de Vídeo en HTML5</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-primary p-4">
+      <h5 class="text-white h4" style="color:#000000">Reproductor Multimedia</h5>
+      <span class="text-muted">
+        <ul class="nav">
+          <li class="active"><a href="#" style="color:#000000">Inicio</a></li>
+          <li><a href="bootstrap.html#pelis" style="color:#000000">Peliculas</a></li>
+          <li><a href="bootstrap.html#myCanvas" style="color:#000000">Canvas</a></li>
+          <li><a href="bootstrap.html#foot" style="color:#000000">Condiciones</a></li>
+        </ul>
+      </span>
+    </div>
+  </div>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- CONTENERDOR DEL SITIO WEB -->
+  <div class="container-fluid mt-5" id="fuente">
+    <div class="row">
+      <!-- CONTENEDOR DE VIDEO Y LOS CONTROLADORES DE VIDEO -->
+
+      <div class="col-sm-8 text-center" id="pelis">
+        <!-- VIDEO INICIAL QUE APARECE AL CARGAR POR PRIMERA VEZ LA PAGINA -->
+        <video id="myVideo" height="auto" width="100%">
+          <source id="source1" src="pelis/sintel.mp4" type="video/mp4">
+          <source id="source2" src="pelis/sintel.mkv" type="video/mkv">
+        </video>
+
+        <br>
+        <!-- BARRA DE TIEMPO DE REPRODUCCION DEL VIDEO -->
+        <span id="curtimetext">00:00</span>&emsp;
+        <!-- TIEMPO DE REPRODUCCION ACTUAL -->
+        <input id="seekslider" type="range" min="0" max="100" value="0" step="1" style="width: 85%;">&emsp;
+        <!-- BARRA DEL TIEMPO DE RERODCCION -->
+        <span id="durtimetext">00:00</span><br /><br /> <!-- TIEMPO DE REPRODUCCION TOTAL -->
+
+        <!-- CONTENDOR DE LOS CONTROLES DEL VIDEO -->
+        <div class="p-3 bg-dark text-white text-center">
+          <button type="button" id="playpausebtn" class="btn btn-primary"><img id="imgPlay" src="img/play.png"
+              height="15px" width="15px" /></button> <!-- BOTON DE PLAY Y PAUSE -->
+          <button onclick="repeat()" type="button" class="btn btn-primary" id="repeat"><img id="imgRepeat"
+              src="img/repeat.png" height="15px" width="15px" /></button>&emsp;&emsp;&emsp;
+          <!-- BOTON DE REPETICION DEL VIDEO -->
+          <button onclick="atrasar()" type="button" class="btn btn-primary" id="time-"><img src="img/menos10.png"
+              height="15px" width="15px" /></button> <!-- BOTON DE RESTAR 10 AL TIEMPO DE REPRODUCCION ACTUAL -->
+          <button onclick="adelantar()" type="button" class="btn btn-primary" id="time+"><img src="img/plus10.png"
+              height="15px" width="15px" /></button>&emsp;&emsp;&emsp;
+          <!-- BOTON DE SUMAR 10 AL TIEMPO DE REPRODUCCION ACTUAL -->
+          <button onclick="decreaseVolume()" type="button" class="btn btn-primary" id="volume-"><img id="lowVolume"
+              src="img/lowVolume.png" height="15px" width="15px" /></button> <!-- BOTON DE REDUCIR VOLUMEN -->
+          <button onclick="increaseVolume()" type="button" class="btn btn-primary" id="volume+"><img id="highVolume"
+              src="img/highVolume.png" height="15px" width="15px" /></button> <!-- BOTON DE INCREMENTAR VOLUMEN -->
+          <button onclick="enableMute()" type="button" class="btn btn-danger" id="mute"><img id="imgMute"
+              src="img/mute.png" height="15px" width="15px" /></button>&emsp;&emsp;
+          <!-- BOTON DE MUUTE -->
+          <input type="range" id="volume" min="0" max="1" step="0.01" value="1" style="width: 35%;"></input><br /><br />
+          <!-- BARRA DE SONIDO ACTUAL -->
+          <button onclick="capture()" type="button" class="btn btn-warning" id="cap"><img id="imgCap"
+              src="img/captura.png" height="15px" width="15px" /></button>&emsp;
+          <!-- BOTON DE CAPTURA DE VIDEO -->
+          <button onclick="cambiarPista()" type="button" class="btn btn-primary">Cambiar Pista</button><br /><br />
+          <!-- BOTON PARA CAMBIAR DE VIDEO -->
+          <canvas id="canvas" style="height: 35%; width: 70%;"></canvas>
+          <!-- CANVAS DONDE SE MOSTRARA LA IMAGEN CAPTURADA -->
+          <hr class="d-sm-none">
+        </div>
+      </div>
+
+      <!-- CONTENEDOR DEL BANNER -->
+      <div class="col-sm-4 text-center">
+        <!-- IMAGEN DEL BANNER -->
+        <img src="img/POSTER.png" alt="poster" height="100%" width="90%">
+      </div>
+
+      <!-- CONTENEDORES DE LA LISTA DE REPRODUCCION -->
+      <div class="col-sm-8 text-center mt-5">
+
+        <div class="row justify-content-center">
+          <!-- CADA CONTENEDOR CARD, ES UNA IMAGEN DE LA LISTA DE REPRODUCCION, DONDE SE MUESTRA CADA UNA DE LAS PELICULAS DISPONIBLES -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="card">
+              <div class="img-container">
+                <a href="bootstrap.html#myVideo"><img src="img/sintel.jpg" class="card-img-top" alt="switch1"
+                    width="300" height="200" onclick="cambiarPista(1)"></a> <!-- IMAGEN DE LA PELI -->
+              </div>
+              <!-- CONTENEDOR CON LA INFORMACION DE LA PELI -->
+              <div class="card-body">
+                <h5 class="card-title">SINTEL</h5>
+                <p class="card-text"> Creative Commons</p>
+                <strong>00:14:48</strong><br><br>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="card">
+              <div class="img-container">
+                <a href="bootstrap.html#myVideo"><img src="img/ed.jpg" class="card-img-top" alt="switch1" width="300"
+                    height="200" onclick="cambiarPista(2)"></a><!-- IMAGEN DE LA PELI -->
+              </div>
+              <!-- CONTENEDOR CON LA INFORMACION DE LA PELI -->
+              <div class="card-body">
+                <h5 class="card-title">ELEPHAN DREAM</h5>
+                <p class="card-text"> Creative Commons</p>
+                <strong>00:12:10</strong><br><br>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="card">
+              <div class="img-container">
+                <a href="bootstrap.html#myVideo"><img src="img/cl.jpg" class="card-img-top" alt="switch1" width="300"
+                    height="200" onclick="cambiarPista(3)"></a><!-- IMAGEN DE LA PELI -->
+              </div>
+              <!-- CONTENEDOR CON LA INFORMACION DE LA PELI -->
+              <div class="card-body">
+                <h5 class="card-title">COSMOS</h5>
+                <p class="card-text"> Creative Commons</p>
+                <strong>00:10:53</strong><br><br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONTENEDOR DONDE SE DIBUJA EL VIDEOJUEGO -->
+      <div class="container-fluid col-sm-8 text-center mt-5">
+        <canvas id="can" height="350" width="860" style="border:1px solid">
+
+        </canvas>
+      </div>
+      <!-- CONTENEDOR DONDE SE DIBUJARÁ NUESTRO MUÑECO JUAN JOSÉ -->
+      <div class="col-sm-4 text-center mt-5">
+        <canvas id="myCanvas" width="400" height="350" style="border:1px solid #000000;">
+
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR CON LA INFORMACION DEL FOOTER -->
+  <div id="foot" class="mt-5 p-4 bg-dark text-white text-center">
+    <p>Sitio protegido con una licencia Creative Commons</p>
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Licencia de Creative Commons"
+        style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />Este obra está bajo
+    una <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">licencia de Creative Commons
+      Reconocimiento-NoComercial 4.0 Internacional</a>.
+  </div>
+
+  <!-- LLAMADA DEL SCRIPT DEL JUEGO DE CANVAS -->
+  <script src="JS/canvas.js"></script>
+  <script src="JS/juego.js"></script>
+
+
+</body>
+
+</html>
